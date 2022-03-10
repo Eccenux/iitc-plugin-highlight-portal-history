@@ -1,45 +1,40 @@
-// ==UserScript==
-// @author         Johtaja
+﻿// ==UserScript==
 // @name           IITC plugin: Highlight portals based on history
+// @author         Johtaja
 // @category       Highlighter
-// @version        0.2.0
+// @version        0.2.1
 // @description    Use the portal fill color to denote the portal has been visited, captured, scout controlled
 // @id             highlight-portal-history
 // @namespace      https://github.com/IITC-CE/ingress-intel-total-conversion
-// @updateURL      https://iitc.app/build/release/plugins/highlight-portal-history.meta.js
-// @downloadURL    https://iitc.app/build/release/plugins/highlight-portal-history.user.js
 // @match          https://intel.ingress.com/*
 // @grant          none
+// @updateURL      https://github.com/Eccenux/iitc-plugin-highlight-portal-history/raw/master/highlight-portal-history.meta.js
+// @downloadURL    https://github.com/Eccenux/iitc-plugin-highlight-portal-history/raw/master/highlight-portal-history.user.js
 // ==/UserScript==
 
 function wrapper(plugin_info) {
 // ensure plugin framework is there, even if iitc is not yet loaded
 if(typeof window.plugin !== 'function') window.plugin = function() {};
 
-//PLUGIN AUTHORS: writing a plugin outside of the IITC build environment? if so, delete these lines!!
-//(leaving them in place might break the 'About IITC' page or break update checks)
-plugin_info.buildName = 'release';
-plugin_info.dateTimeVersion = '2021-12-07-124519';
-plugin_info.pluginId = 'highlight-portal-history';
-//END PLUGIN AUTHORS NOTE
-
-
 // use own namespace for plugin
 var portalsHistory = {};
 window.plugin.portalHighlighterPortalsHistory = portalsHistory;
 
+// nux: custom styles
 portalsHistory.styles = {
   common: {
-    fillOpacity: 1
+    fillOpacity: 0.8,
   },
   marked: {
-    fillColor: 'red'
+    fillColor: 'red',
   },
   semiMarked: {
     fillColor: 'yellow'
   },
   commonOther: {
-    // no action by default
+    // transparent by default
+    fillOpacity: 0.2,
+	opacity: 0.2,
   }
 };
 
@@ -136,4 +131,3 @@ var info = {};
 if (typeof GM_info !== 'undefined' && GM_info && GM_info.script) info.script = { version: GM_info.script.version, name: GM_info.script.name, description: GM_info.script.description };
 script.appendChild(document.createTextNode('('+ wrapper +')('+JSON.stringify(info)+');'));
 (document.body || document.head || document.documentElement).appendChild(script);
-
